@@ -11,17 +11,15 @@ import java.util.ArrayList;
  *
  * @author sparrow
  */
-public class Agent {
-    private String name;
-    private float gamma;
-    private Building trainedTo = null;
-    private ArrayList<ArrayList<Integer>> Q = new ArrayList<ArrayList<Integer>>();
-    
-    public Agent(){
-        
+public class PreBuilding {    
+    private ArrayList<Building> buildings = new ArrayList<Building>();
+
+    public PreBuilding(){
+        //Crear edificios pre diseñados
+        //Habitaciones creadas
     }
     
-    public void printQ(){
-        
+    public Building getBuldings(int i){
+        return this.buildings.get(i);
     }
 }

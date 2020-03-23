@@ -11,14 +11,16 @@ import java.util.ArrayList;
  *
  * @author sparrow
  */
-public class preBuilding {    
-    private ArrayList<Building> buildings = new ArrayList<Building>();
-
-    public preBuilding(){
-        //Crear edificios
+public class PreAgent {
+    
+    private ArrayList<Agent> agents = new ArrayList<Agent>();
+    
+    public PreAgent(){
+        //crear agentes prediseñados
+        //Matriz Q creada
     }
     
-    public Building getBuldings(int i){
-        return this.buildings.get(i);
+    public Agent getAgent(int i){
+        return this.agents.get(i);
     }
 }

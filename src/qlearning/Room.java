@@ -22,7 +22,8 @@ public class Room {
     private Room E = null;
     private Room S = null;
     private Room W = null;
-            
+    
+    static private Room wall = new Room(-1,"Wall",-1,-1,-1);;
     //private ArrayList<Room> neighbors = new ArrayList<Room>();
     
     public Room(int id, int x, int y, int point){
@@ -83,5 +84,8 @@ public class Room {
     }
     public String getName(){
         return this.name; 
+    }
+    static public Room getWall(){
+        return Room.wall;
     }
 }

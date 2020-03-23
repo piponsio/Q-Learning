@@ -127,24 +127,24 @@ public class Building {
         count = 0;
         point = 0;
         //Definiendo una muralla
-        Room wall = new Room(-1,"Wall",-1,-1,-1);
+        //Room wall = new Room(-1,"Wall",-1,-1,-1);
         System.out.println("Asignando Puertas");
         //Escogiendo si existen puertas en cada habitación hacía cada
         //coordenada (N,E,S,W) -> (N,E,S,O)
         for(int i = 0; i < this.totalRoom; i++){
             //Definiendo murallas para el perimetro del edificio
-            if(rooms.get(i).getX() == 0) rooms.get(i).setN(wall);
-            if(rooms.get(i).getY() == 0) rooms.get(i).setW(wall);
-            if(rooms.get(i).getX() == x-1) rooms.get(i).setS(wall);
-            if(rooms.get(i).getY() == y-1) rooms.get(i).setE(wall);
+            if(rooms.get(i).getX() == 0) rooms.get(i).setN(Room.getWall());
+            if(rooms.get(i).getY() == 0) rooms.get(i).setW(Room.getWall());
+            if(rooms.get(i).getX() == x-1) rooms.get(i).setS(Room.getWall());
+            if(rooms.get(i).getY() == y-1) rooms.get(i).setE(Room.getWall());
             
             //Definiendo si habrá puerta hacia el Este
             //y asignando a vecino o muralla
             random = (int) Math.floor(Math.random()*(1-0+1)+0);
             if(rooms.get(i).getE()==null){
                 if(random == 0){
-                    rooms.get(i).setE(wall);
-                    rooms.get(i+1).setW(wall);
+                    rooms.get(i).setE(Room.getWall());
+                    rooms.get(i+1).setW(Room.getWall());
                 }
                 else{
                     rooms.get(i).setE(rooms.get(i+1));
@@ -155,8 +155,8 @@ public class Building {
             random = (int) Math.floor(Math.random()*(1-0+1)+0);
             if(rooms.get(i).getS()==null){
                 if(random == 0){
-                    rooms.get(i).setS(wall);
-                    rooms.get(i+y).setN(wall);
+                    rooms.get(i).setS(Room.getWall());
+                    rooms.get(i+y).setN(Room.getWall());
                 }
                 else{
                     rooms.get(i).setS(rooms.get(i+y));
@@ -167,8 +167,8 @@ public class Building {
             random = (int) Math.floor(Math.random()*(1-0+1)+0);
             if(rooms.get(i).getW()==null){
                 if(random == 0){
-                    rooms.get(i).setW(wall);
-                    rooms.get(i-1).setE(wall);
+                    rooms.get(i).setW(Room.getWall());
+                    rooms.get(i-1).setE(Room.getWall());
                 }
                 else{
                     rooms.get(i).setW(rooms.get(i-1));
@@ -179,8 +179,8 @@ public class Building {
             random = (int) Math.floor(Math.random()*(1-0+1)+0);
             if(rooms.get(i).getN()==null){
                 if(random == 0){
-                    rooms.get(i).setN(wall);
-                    rooms.get(i-y).setS(wall);
+                    rooms.get(i).setN(Room.getWall());
+                    rooms.get(i-y).setS(Room.getWall());
                 }
                 else{
                     rooms.get(i).setN(rooms.get(i-y));
