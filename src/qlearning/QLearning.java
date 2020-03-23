@@ -16,7 +16,7 @@ public class QLearning {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Building b1 = new Building("Edificio 1",0,2,2);
+        Building b1 = new Building("Edificio 1",0,3,3);
         b1.printBuilding();
         b1.printR();
     }
