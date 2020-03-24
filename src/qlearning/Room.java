@@ -14,8 +14,9 @@ import java.util.ArrayList;
 public class Room {
     private int id;
     private String name;
-    private int x;
-    private int y;
+    //private Coords coords;
+    private int width;
+    private int height;
     private int point;
     
     private Room N = null;
@@ -24,26 +25,22 @@ public class Room {
     private Room W = null;
     
     static private Room wall = new Room(-1,"Wall",-1,-1,-1);;
-    //private ArrayList<Room> neighbors = new ArrayList<Room>();
     
-    public Room(int id, int x, int y, int point){
+    public Room(int id, int width, int height, int point){
         this.id = id;
         this.name = "Default";
-        this.x = x;
-        this.y = y;
+        this.width = width;
+        this.height = height;
         this.point = point;
     }
     public Room(int id, String name, int x, int y, int point){
         this.id = id;
         this.name = name;
-        this.x = x;
-        this.y = y;
+        this.width = width;
+        this.height = height;
         this.point = point;
     }
-    
-//    public ArrayList<Room> getNeighbors(){
-//        return this.neighbors;
-//    }
+
     public void setN(Room a){
         this.N = a;
     }
@@ -68,14 +65,14 @@ public class Room {
     }
     public Room getW(){
         return this.W;
+    } 
+    public int getWidth(){
+        return this.width;
     }
-    
-    public int getX(){
-        return this.x;
+    public int getHeight(){
+        return this.height;
     }
-    public int getY(){
-        return this.y;
-    }
+
     public int getId(){
         return this.id;
     }

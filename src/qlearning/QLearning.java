@@ -18,7 +18,11 @@ public class QLearning {
         // TODO code application logic here
         Building b1 = new Building("Edificio 1",0,3,3);
         b1.printBuilding();
+        
+        Agent a1 = new Agent("Explorador 1",0.8f, b1, b1.randomRoom());
         b1.printR();
+        
+        
     }
     
 }

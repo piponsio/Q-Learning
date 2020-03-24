@@ -96,7 +96,7 @@ public class Building {
     }
     //Crea un edificio con habitaciones pegadas entre ellas algunas con
     //acceso a ellas y otras no
-    public void random(String name, int id, int x, int y){
+    private void random(String name, int id, int x, int y){
         this.name = name;
         this.x = x;
         this.y = y;
@@ -133,10 +133,10 @@ public class Building {
         //coordenada (N,E,S,W) -> (N,E,S,O)
         for(int i = 0; i < this.totalRoom; i++){
             //Definiendo murallas para el perimetro del edificio
-            if(rooms.get(i).getX() == 0) rooms.get(i).setN(Room.getWall());
-            if(rooms.get(i).getY() == 0) rooms.get(i).setW(Room.getWall());
-            if(rooms.get(i).getX() == x-1) rooms.get(i).setS(Room.getWall());
-            if(rooms.get(i).getY() == y-1) rooms.get(i).setE(Room.getWall());
+            if(rooms.get(i).getWidth() == 0) rooms.get(i).setN(Room.getWall());
+            if(rooms.get(i).getHeight() == 0) rooms.get(i).setW(Room.getWall());
+            if(rooms.get(i).getWidth() == x-1) rooms.get(i).setS(Room.getWall());
+            if(rooms.get(i).getHeight() == y-1) rooms.get(i).setE(Room.getWall());
             
             //Definiendo si habrá puerta hacia el Este
             //y asignando a vecino o muralla
@@ -192,7 +192,11 @@ public class Building {
         this.generateR();
         
     }
-    public void generateR(){
+    public Room randomRoom(){
+        int random = (int) Math.floor(Math.random()*((this.totalRoom-1)-0+1)+0);
+        return this.rooms.get(random);
+    }
+    private void generateR(){
         System.out.println("Creando Matriz R");
         //Asignando valores a matriz R
         int count = 0;
@@ -207,5 +211,13 @@ public class Building {
             R.add(temp);
         }
     }
-    
+    public void insertInR(int value, int room, int action){
+        this.R.get(room).set(action,value);
+    }
+    public int getOfR(int room, int action){
+        return this.R.get(room).get(action);
+    }
+    public int getTotalRoom(){
+        return this.totalRoom;
+    }
 }
