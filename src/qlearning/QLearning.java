@@ -16,13 +16,16 @@ public class QLearning {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Building b1 = new Building("Edificio 1",0,3,3);
+
+        Building b1 = new Building("Edificio 1",0,3,3,true);
         b1.printBuilding();
-        
-        Agent a1 = new Agent("Explorador 1",0.8f, b1, b1.randomRoom());
         b1.printR();
         
-        
+        Agent a1 = new Agent("Explorador 1",0.8f, b1, b1.randomRoom());
+        a1.explorer(100,10);
+        a1.printQ();
+
+
     }
     
 }

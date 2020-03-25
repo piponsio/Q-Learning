@@ -25,6 +25,7 @@ public class Room {
     private Room W = null;
     
     static private Room wall = new Room(-1,"Wall",-1,-1,-1);;
+    static private Room notNeighbour = new Room(-2,"notNeighbour",-1,-1,-1);;
     
     public Room(int id, int width, int height, int point){
         this.id = id;
@@ -84,5 +85,38 @@ public class Room {
     }
     static public Room getWall(){
         return Room.wall;
+    }
+    static public Room getNotNeighbour(){
+        return Room.notNeighbour;
+    }
+    
+    static public ArrayList<Room> neighborsAvailable(Room room){
+        ArrayList<Room> options = new ArrayList<Room>();
+        
+        if(room.getN().getId() != -1) options.add(room.getN());
+        if(room.getE().getId() != -1) options.add(room.getE());
+        if(room.getS().getId() != -1) options.add(room.getS());
+        if(room.getW().getId() != -1) options.add(room.getW());
+        
+        return options;
+    }
+    static public Room randomNeighbour(Room room){
+        
+        ArrayList<Room> options = Room.neighborsAvailable(room);
+        int random = (int) Math.floor(Math.random()*((options.size()-1)-0+1)+0);
+
+        Room randomNeighbour;
+        randomNeighbour = (options.size() > 0) ? options.get(random) : Room.getNotNeighbour();
+        return randomNeighbour;
+    }
+    
+    static public Coords randomNeighbour(int id){
+        Coords coords = null;
+        
+        return coords;
+    }
+    
+    static public void bestNeighbour(){
+        //agente lee Q y elige al mejor para moverse
     }
 }

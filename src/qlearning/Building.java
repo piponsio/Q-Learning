@@ -17,20 +17,12 @@ public class Building {
     private int x;
     private int y;
     private int totalRoom;
+    private Room goal;
     private ArrayList<ArrayList<Integer>> R = null;
     private ArrayList<Room> rooms = new ArrayList<Room>();
-    
-    public Building(String name, int id, int x, int y, int totalRoom, ArrayList<Room> rooms){
-        this.name = name;
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.totalRoom = totalRoom;
-        this.rooms = rooms;
-        this.generateR();
-    }
-    public Building(String name, int id, int x, int y){
-        this.random(name,id,x,y);
+  
+    public Building(String name, int id, int x, int y, boolean randomDoors){
+        this.random(name,id,x,y,randomDoors);
     }
     
     public void printBuilding(){
@@ -83,6 +75,7 @@ public class Building {
     }
     //Funcion que imprime la matriz R
     public void printR(){
+        System.out.println();
         System.out.println("Imprimiendo Matriz R");
         for(int i = 0; i < this.totalRoom; i++){
             for(int j = 0; j < this.totalRoom; j++){
@@ -96,7 +89,7 @@ public class Building {
     }
     //Crea un edificio con habitaciones pegadas entre ellas algunas con
     //acceso a ellas y otras no
-    private void random(String name, int id, int x, int y){
+    private void random(String name, int id, int x, int y, boolean randomDoors){
         this.name = name;
         this.x = x;
         this.y = y;
@@ -107,10 +100,12 @@ public class Building {
         
         int point = 0;
         
+        System.out.println();
         System.out.println("Construyendo edificio");
         //Eligiendo la habitación que será la meta
         int random = (int) Math.floor(Math.random()*(this.totalRoom-1-0+1)+0);
         
+        System.out.println();
         System.out.println("Creando habitaciones");
         //Creando habitaciones que están juntas entre sí como forma matriz 2x2
         //otorgandole el valor de 100 a la meta
@@ -119,6 +114,7 @@ public class Building {
                 if(random == count) point = 100;
                 else point = 0;
                 Room temp = new Room(count,i,j,point);
+                if(point == 100) this.goal = temp;
                 rooms.add(temp);
                 count++;
             }
@@ -128,6 +124,7 @@ public class Building {
         point = 0;
         //Definiendo una muralla
         //Room wall = new Room(-1,"Wall",-1,-1,-1);
+        System.out.println();
         System.out.println("Asignando Puertas");
         //Escogiendo si existen puertas en cada habitación hacía cada
         //coordenada (N,E,S,W) -> (N,E,S,O)
@@ -138,55 +135,30 @@ public class Building {
             if(rooms.get(i).getWidth() == x-1) rooms.get(i).setS(Room.getWall());
             if(rooms.get(i).getHeight() == y-1) rooms.get(i).setE(Room.getWall());
             
-            //Definiendo si habrá puerta hacia el Este
-            //y asignando a vecino o muralla
-            random = (int) Math.floor(Math.random()*(1-0+1)+0);
-            if(rooms.get(i).getE()==null){
-                if(random == 0){
-                    rooms.get(i).setE(Room.getWall());
-                    rooms.get(i+1).setW(Room.getWall());
-                }
-                else{
-                    rooms.get(i).setE(rooms.get(i+1));
-                    rooms.get(i+1).setW(rooms.get(i));
-                }
+            if(randomDoors){
+                //Definiendo si habrá puerta hacia el Este
+                //y asignando a vecino o muralla
+                boolean status;
+                
+                random = (int) Math.floor(Math.random()*(1-0+1)+0);
+                if(rooms.get(i).getE()==null) status = (random == 0) ? this.editDoor(i,(i+1),'E',"bloq") : this.editDoor(i,(i+1),'E',"add");
+                
+                random = (int) Math.floor(Math.random()*(1-0+1)+0);
+                if(rooms.get(i).getS()==null) status = (random == 0) ? this.editDoor(i,(i+y),'S',"bloq") : this.editDoor(i,(i+y),'S',"add");
+              
+                random = (int) Math.floor(Math.random()*(1-0+1)+0);
+                if(rooms.get(i).getW()==null) status = (random == 0) ? this.editDoor(i,(i-1),'W',"bloq") : this.editDoor(i,(i-1),'W',"add");
+
+                random = (int) Math.floor(Math.random()*(1-0+1)+0);
+                if(rooms.get(i).getN() == null) status = (random == 0) ? this.editDoor(i,(i-y),'N',"bloq") : this.editDoor(i,(i-y),'N',"add");
+               
             }
-            
-            random = (int) Math.floor(Math.random()*(1-0+1)+0);
-            if(rooms.get(i).getS()==null){
-                if(random == 0){
-                    rooms.get(i).setS(Room.getWall());
-                    rooms.get(i+y).setN(Room.getWall());
-                }
-                else{
-                    rooms.get(i).setS(rooms.get(i+y));
-                    rooms.get(i+y).setN(rooms.get(i));
-                }
+            else{
+                rooms.get(i).setN(Room.getWall());
+                rooms.get(i).setE(Room.getWall());
+                rooms.get(i).setS(Room.getWall());
+                rooms.get(i).setW(Room.getWall());
             }
-            
-            random = (int) Math.floor(Math.random()*(1-0+1)+0);
-            if(rooms.get(i).getW()==null){
-                if(random == 0){
-                    rooms.get(i).setW(Room.getWall());
-                    rooms.get(i-1).setE(Room.getWall());
-                }
-                else{
-                    rooms.get(i).setW(rooms.get(i-1));
-                    rooms.get(i-1).setE(rooms.get(i));
-                }
-            }
-            
-            random = (int) Math.floor(Math.random()*(1-0+1)+0);
-            if(rooms.get(i).getN()==null){
-                if(random == 0){
-                    rooms.get(i).setN(Room.getWall());
-                    rooms.get(i-y).setS(Room.getWall());
-                }
-                else{
-                    rooms.get(i).setN(rooms.get(i-y));
-                    rooms.get(i-y).setS(rooms.get(i));
-                }
-            }   
         }
         
         this.generateR();
@@ -197,9 +169,9 @@ public class Building {
         return this.rooms.get(random);
     }
     private void generateR(){
+        System.out.println();
         System.out.println("Creando Matriz R");
         //Asignando valores a matriz R
-        int count = 0;
         for(int i = 0; i < this.totalRoom; i++){
             ArrayList<Integer> temp = new ArrayList<Integer>();
             for(int k = 0; k < this.totalRoom; k++) temp.add(-1);
@@ -219,5 +191,47 @@ public class Building {
     }
     public int getTotalRoom(){
         return this.totalRoom;
+    }
+    public Room getGoal(){
+        return this.goal;
+    }
+    public boolean editDoor(int a, int b, char c, String d){
+        if(d.equals("add") || d.equals("ADD")){
+            if(c == 'E' || c == 'e' ){
+                this.rooms.get(a).setE(this.rooms.get(b));
+                this.rooms.get(b).setW(this.rooms.get(a));
+            }
+            else if(c == 'S' || c == 's' ){
+                this.rooms.get(a).setS(this.rooms.get(b));
+                this.rooms.get(b).setN(this.rooms.get(a));
+            }
+            else if(c == 'W' || c == 'w' ){
+                this.rooms.get(a).setW(this.rooms.get(b));
+                this.rooms.get(b).setE(this.rooms.get(a));
+            }
+            else if(c == 'N' || c == 'n' ){
+                this.rooms.get(a).setN(this.rooms.get(b));
+                this.rooms.get(b).setS(this.rooms.get(a));
+            }
+        }
+        else if(d.equals("bloq") || d.equals("BLOQ")){
+            if(c == 'E' || c == 'e' ){
+                rooms.get(a).setE(Room.getWall());
+                rooms.get(b).setW(Room.getWall());   
+            }
+            else if(c == 'S' || c == 's' ){
+                rooms.get(a).setS(Room.getWall());
+                rooms.get(b).setN(Room.getWall());   
+            }
+            else if(c == 'W' || c == 'w' ){
+                rooms.get(a).setW(Room.getWall());
+                rooms.get(b).setE(Room.getWall());   
+            }
+            else if(c == 'N' || c == 'n' ){
+                rooms.get(a).setN(Room.getWall());
+                rooms.get(b).setS(Room.getWall());   
+            }
+        }
+        return true;
     }
 }

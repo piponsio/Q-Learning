@@ -3,23 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package qlearning;
+package predefined;
 
 import java.util.ArrayList;
+import qlearning.Agent;
+import qlearning.Building;
 
 /**
  *
  * @author sparrow
  */
 public class PreBuilding {    
-    private ArrayList<Building> buildings = new ArrayList<Building>();
+    static private ArrayList<Building> buildings = new ArrayList<Building>();
 
     public PreBuilding(){
-        //Crear edificios pre diseñados
-        //Habitaciones creadas
+        /*
+        Building b1 = new Building("Edificio 1",0,3,10,true);
+        b1.printBuilding();
+        b1.printR();
+        
+        Agent a1 = new Agent("Explorador 1",0.8f, b1, b1.randomRoom());
+        a1.explorer(100,10);
+        a1.printQ();*/
     }
     
-    public Building getBuldings(int i){
-        return this.buildings.get(i);
+    static public Building getBuldings(int i){
+        return PreBuilding.buildings.get(i);
     }
 }
