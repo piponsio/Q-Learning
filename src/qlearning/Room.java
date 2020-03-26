@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class Room {
     private int id;
     private String name;
-    //private Coords coords;
-    private int width;
-    private int height;
+    private Coords coords;
+//    private int width;
+//    private int height;
     private int point;
     
     private Room N = null;
@@ -27,18 +27,21 @@ public class Room {
     static private Room wall = new Room(-1,"Wall",-1,-1,-1);;
     static private Room notNeighbour = new Room(-2,"notNeighbour",-1,-1,-1);;
     
-    public Room(int id, int width, int height, int point){
+    public Room(int id, int x, int y, int point){
         this.id = id;
         this.name = "Default";
-        this.width = width;
-        this.height = height;
+        this.coords = new Coords(x,y);
+//        this.x = x;
+//        this.y = y;
         this.point = point;
     }
     public Room(int id, String name, int x, int y, int point){
         this.id = id;
         this.name = name;
-        this.width = width;
-        this.height = height;
+        this.coords = new Coords(x,y);
+
+//        this.width = width;
+//        this.height = height;
         this.point = point;
     }
 
@@ -67,11 +70,11 @@ public class Room {
     public Room getW(){
         return this.W;
     } 
-    public int getWidth(){
-        return this.width;
+    public int getX(){
+        return this.coords.getX();
     }
-    public int getHeight(){
-        return this.height;
+    public int getY(){
+        return this.coords.getY();
     }
 
     public int getId(){
@@ -114,9 +117,5 @@ public class Room {
         Coords coords = null;
         
         return coords;
-    }
-    
-    static public void bestNeighbour(){
-        //agente lee Q y elige al mejor para moverse
     }
 }
